@@ -34,3 +34,5 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
+
+LOCALE_PATHS = ['movies/locale']
