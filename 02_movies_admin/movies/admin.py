@@ -1,14 +1,14 @@
 from django.contrib import admin
 
-from .models import Filmwork, Genre, GenreFilmwork, Person, PersonFilmwork
+from .models import FilmWork, Genre, GenreFilmWork, Person, PersonFilmWork
 
 
 class GenreFilmWorkInline(admin.TabularInline):
-    model = GenreFilmwork
+    model = GenreFilmWork
 
 
 class PersonFilmWorkInline(admin.TabularInline):
-    model = PersonFilmwork
+    model = PersonFilmWork
 
 
 @admin.register(Genre)
@@ -21,9 +21,9 @@ class PersonAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Filmwork)
+@admin.register(FilmWork)
 class FilmWorkAdmin(admin.ModelAdmin):
     inlines = (GenreFilmWorkInline, PersonFilmWorkInline,)
     list_display = ('title', 'type', 'creation_date', 'rating',)
     list_filter = ('type', 'title',)
-    search_fields = ('title', 'description', 'id')
+    search_fields = ('title', 'description', 'id',)
