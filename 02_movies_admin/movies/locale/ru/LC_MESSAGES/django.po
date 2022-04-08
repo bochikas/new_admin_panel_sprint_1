@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-02 16:00+0000\n"
+"POT-Creation-Date: 2022-04-08 03:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,74 +34,78 @@ msgstr "Фильм"
 msgid "tv show"
 msgstr "Телешоу"
 
-#: movies/models.py:29
+#: movies/models.py:30
 msgid "name"
 msgstr "Название"
 
-#: movies/models.py:30 movies/models.py:43
+#: movies/models.py:31 movies/models.py:45
 msgid "description"
 msgstr "Описание"
 
-#: movies/models.py:34
+#: movies/models.py:35 movies/models.py:67
 msgid "genre"
 msgstr "Жанр"
 
-#: movies/models.py:35
+#: movies/models.py:36
 msgid "genres"
 msgstr "Жанры"
 
-#: movies/models.py:42
+#: movies/models.py:44
 msgid "title"
 msgstr "Название"
 
-#: movies/models.py:45
+#: movies/models.py:46
+msgid "creation date"
+msgstr "Дата создания"
+
+#: movies/models.py:47
 msgid "rating"
 msgstr "Рейтинг"
 
-#: movies/models.py:48
+#: movies/models.py:50
 msgid "type"
 msgstr "Тип"
 
-#: movies/models.py:50
+#: movies/models.py:52
 msgid "file"
 msgstr "Файл"
 
-#: movies/models.py:54
+#: movies/models.py:57 movies/models.py:66 movies/models.py:91
 msgid "film work"
 msgstr "Кинопроизведение"
 
-#: movies/models.py:55
+#: movies/models.py:58
 msgid "film works"
 msgstr "Кинопроизведения"
 
-#: movies/models.py:68
+#: movies/models.py:72
 msgid "filmwork genre"
 msgstr "Жанр кинопроизведения"
 
-#: movies/models.py:69
+#: movies/models.py:73
 msgid "filmwork genres"
 msgstr "Жанры кинопроизведений"
 
-#: movies/models.py:73
+#: movies/models.py:78
 msgid "full name"
 msgstr "Полное имя"
 
-#: movies/models.py:77
+#: movies/models.py:82 movies/models.py:92
 msgid "person"
 msgstr "Участник"
 
-#: movies/models.py:78
+#: movies/models.py:83
 msgid "people"
 msgstr "Участники"
 
-#: movies/models.py:87
+#: movies/models.py:93
 msgid "role"
 msgstr "Роль"
 
-#: movies/models.py:92
+#: movies/models.py:98
 msgid "filmwork person"
 msgstr "Участник произведения"
 
-#: movies/models.py:93
+#: movies/models.py:99
 msgid "filmwork people"
 msgstr "Участники произведения"
