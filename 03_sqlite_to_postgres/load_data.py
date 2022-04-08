@@ -76,7 +76,7 @@ class SQLiteLoader:
 
         _fields = get_fields(model)
 
-        cursor.execute(f"SELECT {_fields} FROM {table};")
+        cursor.execute(f'SELECT {_fields} FROM {table};')
 
         data = cursor.fetchmany(BATCH_SIZE)
 
