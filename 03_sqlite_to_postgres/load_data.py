@@ -64,18 +64,18 @@ class SQLiteLoader:
 
     def __init__(self, connection):
         self.connection = connection
+        self.connection.row_factory = sqlite3.Row
 
     def load_movies(self, table, model):
         """
         Получение данных из базы SQLite
         """
 
-        self.connection.row_factory = sqlite3.Row
         cursor = self.connection.cursor()
 
-        _fields = get_fields(model)
+        fields = get_fields(model)
 
-        cursor.execute(f'SELECT {_fields} FROM {table};')
+        cursor.execute(f'SELECT {fields} FROM {table};')
 
         data = cursor.fetchmany(BATCH_SIZE)
 
@@ -97,8 +97,8 @@ def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
         'genre_film_work': GenreFilmWork, 'person_film_work': PersonFilmWork
     }
 
-    for table in tables:
-        data = sqlite_loader.load_movies(table, tables[table])
+    for table, model in tables.items():
+        data = sqlite_loader.load_movies(table, model)
         while data:
-            postgres_saver.save_all_data(data, tables[table], table)
+            postgres_saver.save_all_data(data, model, table)
             break
