@@ -64,15 +64,15 @@ def test_contents():
             curs.execute(f'SELECT {fields_str} FROM {table};')
             pg_results = curs.fetchmany(500)
 
-            for _sqlt, _pg in zip(sqlite_results, pg_results):
+            for sqlt, pg in zip(sqlite_results, pg_results):
                 for field in fields:
-                    _sqlt_data = getattr(model(*_sqlt), field)
-                    _pg_data = getattr(model(*_pg), field)
+                    sqlt_data = getattr(model(*sqlt), field)
+                    pg_data = getattr(model(*pg), field)
 
                     msg = (f'Данные в поле {field}, таблицы {table} не '
                            'совпадают с источником')
 
-                    if isinstance(_pg_data, datetime.datetime):
-                        assert parse(_sqlt_data) == _pg_data, msg
+                    if isinstance(pg_data, datetime.datetime):
+                        assert parse(sqlt_data) == pg_data, msg
                     else:
-                        assert _sqlt_data == _pg_data, msg
+                        assert sqlt_data == pg_data, msg
