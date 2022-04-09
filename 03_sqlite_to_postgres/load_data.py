@@ -101,6 +101,4 @@ def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
 
     for table, model in tables.items():
         data = sqlite_loader.load_movies(table, model)
-        while data:
-            postgres_saver.save_all_data(data, model, table)
-            break
+        postgres_saver.save_all_data(data, model, table)
