@@ -15,7 +15,6 @@ def get_fields(model):
     """
 
     fields_lst = list(field.name for field in fields(model))
-
     return fields_lst
 
 
@@ -25,7 +24,6 @@ def get_fields_str(model):
     """
 
     fields_str = ', '.join(get_fields(model))
-
     return fields_str
 
 
@@ -45,8 +43,7 @@ class PostgresSaver:
         fields_str = get_fields_str(model)
         fields = get_fields(model)
 
-        values = '%s ' * len(fields)
-        values = ','.join(values.split())
+        values = ','.join(['%s'] * len(fields))
 
         for batch in data:
             insert_data = [astuple(model(*row)) for row in batch]
@@ -73,12 +70,10 @@ class SQLiteLoader:
         Получение данных из базы SQLite
         """
 
-        cursor = self.connection.cursor()
-
         fields = get_fields_str(model)
 
+        cursor = self.connection.cursor()
         cursor.execute(f'SELECT {fields} FROM {table};')
-
         data = cursor.fetchmany(BATCH_SIZE)
 
         while data:
