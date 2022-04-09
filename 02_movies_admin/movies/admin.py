@@ -13,12 +13,16 @@ class PersonFilmWorkInline(admin.TabularInline):
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name',)
+    list_filter = ('name',)
+    search_fields = ('name',)
 
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('full_name',)
+    list_filter = ('full_name',)
+    search_fields = ('full_name',)
 
 
 @admin.register(FilmWork)
