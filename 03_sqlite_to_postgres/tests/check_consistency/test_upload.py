@@ -9,7 +9,7 @@ from dateutil.parser import parse
 from psycopg2.extras import DictCursor
 
 from models import FilmWork, Genre, GenreFilmWork, Person, PersonFilmWork
-from load_data import get_fields
+from load_data import get_fields, get_fields_str
 
 parent_dir_name = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
@@ -50,22 +50,24 @@ def test_contents():
     """Проверка соответствия содержимого."""
 
     with sqlite3.connect(f'{DB_PATH}') as sqlite_conn, psycopg2.connect(**DSL, cursor_factory=DictCursor) as pg_conn:  # noqa
-        for table in TABLES:
-            _fields = get_fields(TABLES[table])
+        sqlite_conn.row_factory = sqlite3.Row
 
-            sqlite_conn.row_factory = sqlite3.Row
+        for table, model in TABLES.items():
+            fields_str = get_fields_str(model)
+            fields = get_fields(model)
+
             cursor = sqlite_conn.cursor()
-            cursor.execute(f'SELECT {_fields} FROM {table};')
+            cursor.execute(f'SELECT {fields_str} FROM {table};')
             sqlite_results = cursor.fetchall()
 
             curs = pg_conn.cursor()
-            curs.execute(f'SELECT {_fields} FROM {table};')
+            curs.execute(f'SELECT {fields_str} FROM {table};')
             pg_results = curs.fetchmany(500)
 
             for _sqlt, _pg in zip(sqlite_results, pg_results):
-                for field in _fields.split(', '):
-                    _sqlt_data = getattr(TABLES[table](*_sqlt), field)
-                    _pg_data = getattr(TABLES[table](*_pg), field)
+                for field in fields:
+                    _sqlt_data = getattr(model(*_sqlt), field)
+                    _pg_data = getattr(model(*_pg), field)
 
                     msg = (f'Данные в поле {field}, таблицы {table} не '
                            'совпадают с источником')

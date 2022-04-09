@@ -11,12 +11,22 @@ BATCH_SIZE = 50
 
 def get_fields(model):
     """
-    Получение всех полей в модели
+    Получение всех полей модели в виде списка
     """
-    _fields = list(field.name for field in fields(model))
-    _fields = ', '.join(_fields)
 
-    return _fields
+    fields_lst = list(field.name for field in fields(model))
+
+    return fields_lst
+
+
+def get_fields_str(model):
+    """
+    Получение всех полей модели в виде строки
+    """
+
+    fields_str = ', '.join(get_fields(model))
+
+    return fields_str
 
 
 class PostgresSaver:
@@ -32,22 +42,24 @@ class PostgresSaver:
         Метод записи данных в базу
         """
 
-        for line in data:
-            temp_data = [model(*row) for row in line]
+        fields_str = get_fields_str(model)
+        fields = get_fields(model)
 
-            _fields = get_fields(model)
-            values = '%s ' * len(_fields.split())
-            _values = ','.join(values.split())
+        values = '%s ' * len(fields)
+        values = ','.join(values.split())
+
+        for batch in data:
+            temp_data = [model(*row) for row in batch]
 
             with self.connection.cursor() as cursor:
-                query = (f'INSERT INTO content.{table_name} ({_fields}) '
-                         f'VALUES ({_values}) ON CONFLICT (id) DO NOTHING')
+                query = (f'INSERT INTO content.{table_name} ({fields_str}) '
+                         f'VALUES ({values}) ON CONFLICT (id) DO NOTHING')
 
                 insert_data = list()
                 row = list()
 
                 for obj in temp_data:
-                    for field in _fields.split(', '):
+                    for field in fields:
                         x = getattr(obj, field)
                         row.append(x)
                     insert_data.append(tuple(row))
@@ -73,7 +85,7 @@ class SQLiteLoader:
 
         cursor = self.connection.cursor()
 
-        fields = get_fields(model)
+        fields = get_fields_str(model)
 
         cursor.execute(f'SELECT {fields} FROM {table};')
 
