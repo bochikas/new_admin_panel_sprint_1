@@ -1,5 +1,5 @@
 import sqlite3
-from dataclasses import fields
+from dataclasses import fields, astuple
 
 from psycopg2.extensions import connection as _connection
 from psycopg2.extras import execute_batch
@@ -49,21 +49,11 @@ class PostgresSaver:
         values = ','.join(values.split())
 
         for batch in data:
-            temp_data = [model(*row) for row in batch]
+            insert_data = [astuple(model(*row)) for row in batch]
 
             with self.connection.cursor() as cursor:
                 query = (f'INSERT INTO content.{table_name} ({fields_str}) '
                          f'VALUES ({values}) ON CONFLICT (id) DO NOTHING')
-
-                insert_data = list()
-                row = list()
-
-                for obj in temp_data:
-                    for field in fields:
-                        x = getattr(obj, field)
-                        row.append(x)
-                    insert_data.append(tuple(row))
-                    row = []
 
                 execute_batch(cursor, query, insert_data, page_size=BATCH_SIZE)
                 self.connection.commit()
