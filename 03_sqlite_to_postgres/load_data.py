@@ -27,7 +27,7 @@ class PostgresSaver:
     def __init__(self, connection):
         self.connection = connection
 
-    def save_all_data(self, data, model):
+    def save_all_data(self, data, model, table_name):
         """
         Метод записи данных в базу
         """
@@ -40,7 +40,6 @@ class PostgresSaver:
             _values = ','.join(values.split())
 
             with self.connection.cursor() as cursor:
-                table_name = model.get_table_name()
                 query = (f'INSERT INTO content.{table_name} ({_fields}) '
                          f'VALUES ({_values}) ON CONFLICT (id) DO NOTHING')
 
@@ -101,5 +100,5 @@ def load_from_sqlite(connection: sqlite3.Connection, pg_conn: _connection):
     for table in tables:
         data = sqlite_loader.load_movies(table, tables[table])
         while data:
-            postgres_saver.save_all_data(data, tables[table])
+            postgres_saver.save_all_data(data, tables[table], table)
             break

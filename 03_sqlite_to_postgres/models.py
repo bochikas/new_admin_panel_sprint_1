@@ -15,10 +15,6 @@ class FilmWork:
     rating: float = field(default=0.0)
     id: uuid.UUID = field(default_factory=uuid.uuid4)
 
-    @staticmethod
-    def get_table_name():
-        return 'film_work'
-
 
 @dataclass
 class Genre:
@@ -28,10 +24,6 @@ class Genre:
     updated_at: datetime.datetime
     id: uuid.UUID = field(default_factory=uuid.uuid4)
 
-    @staticmethod
-    def get_table_name():
-        return 'genre'
-
 
 @dataclass
 class Person:
@@ -39,10 +31,6 @@ class Person:
     created_at: datetime.datetime
     updated_at: datetime.datetime
     id: uuid.UUID = field(default_factory=uuid.uuid4)
-
-    @staticmethod
-    def get_table_name():
-        return 'person'
 
 
 @dataclass
@@ -52,10 +40,6 @@ class GenreFilmWork:
     created_at: datetime.datetime
     id: uuid.UUID = field(default_factory=uuid.uuid4)
 
-    @staticmethod
-    def get_table_name():
-        return 'genre_film_work'
-
 
 @dataclass
 class PersonFilmWork:
@@ -64,7 +48,3 @@ class PersonFilmWork:
     role: str
     created_at: datetime.datetime
     id: uuid.UUID = field(default_factory=uuid.uuid4)
-
-    @staticmethod
-    def get_table_name():
-        return 'person_film_work'
