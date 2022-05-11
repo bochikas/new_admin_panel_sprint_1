@@ -36,3 +36,5 @@ WSGI_APPLICATION = 'config.wsgi.application'
 STATIC_URL = '/static/'
 
 LOCALE_PATHS = ['movies/locale']
+
+INTERNAL_IPS = ['127.0.0.1']

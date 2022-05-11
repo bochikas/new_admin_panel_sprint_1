@@ -8,3 +8,6 @@ INSTALLED_APPS = [
 
     'movies.apps.MoviesConfig',
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
