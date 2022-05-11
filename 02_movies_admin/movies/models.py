@@ -1,28 +1,13 @@
-import uuid
-
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from .mixins import TimeStampedMixin, UUIDMixin
 
 
 class FilmWorkType(models.TextChoices):
     MOVIE = 'mov', _('movie')
     TV_SHOW = 'tvs', _('tv show')
-
-
-class TimeStampedMixin(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
-
-class UUIDMixin(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-    class Meta:
-        abstract = True
 
 
 class Genre(UUIDMixin, TimeStampedMixin):
