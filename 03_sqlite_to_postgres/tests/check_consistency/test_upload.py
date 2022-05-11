@@ -9,7 +9,7 @@ from dateutil.parser import parse
 from psycopg2.extras import DictCursor
 
 from models import FilmWork, Genre, GenreFilmWork, Person, PersonFilmWork
-from load_data import get_fields, get_fields_str
+from utils import get_fields, get_fields_str
 
 parent_dir_name = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
@@ -18,7 +18,7 @@ sys.path.append(parent_dir_name + "/check_consistency")
 TABLES = {'film_work': FilmWork, 'person': Person, 'genre': Genre,
           'genre_film_work': GenreFilmWork, 'person_film_work': PersonFilmWork}
 DB_PATH = '03_sqlite_to_postgres/db.sqlite'
-DSL = {'dbname': 'movies_database', 'user': 'app', 'password': '123qwe',
+DSN = {'dbname': 'movies_database', 'user': 'app', 'password': '123qwe',
        'host': '127.0.0.1', 'port': 5432}
 
 
