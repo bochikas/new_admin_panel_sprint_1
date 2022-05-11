@@ -10,6 +10,12 @@ class FilmWorkType(models.TextChoices):
     TV_SHOW = 'tvs', _('tv show')
 
 
+class RoleType(models.TextChoices):
+    ACTOR = 'actor', _('actor')
+    DIRECTOR = 'director', _('director')
+    WRITER = 'writer', _('writer')
+
+
 class Genre(UUIDMixin, TimeStampedMixin):
     """Жанр"""
     name = models.CharField(_('name'), max_length=255)
@@ -91,7 +97,8 @@ class PersonFilmWork(UUIDMixin):
                                   verbose_name=_('film work'),)
     person = models.ForeignKey(Person, on_delete=models.CASCADE,
                                verbose_name=_('person'),)
-    role = models.TextField(_('role'), null=True)
+    role = models.TextField(_('role'), null=True,
+                            choices=RoleType.choices)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
